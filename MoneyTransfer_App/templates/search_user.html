@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Users</title>
+</head>
+<body>
+    <h1>Search Users</h1>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+
+    {% if filter.qs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Profile Picture</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profile in filter.qs %}
+                    <tr>
+                        <td>{{ profile.user.username }}</td>
+                        <td>{{ profile.user.email }}</td>
+                        <td>{{ profile.phone_number }}</td>
+                        <td>
+                            {% if profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}" alt="{{ profile.user.username }}" width="50" height="50">
+                            {% else %}
+                                No picture
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form method="get" action="{% url 'send_money' %}">
+                                <input type="hidden" name="username" value="{{ profile.user.username }}">
+                                <button type="submit">Send Money</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="{% static 'transactions.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Sent Transactions</h2>
+        <div class="transactions">
+            {% for transaction in sent_transactions_page %}
+            <div class="transaction">
+                <div class="icon">
+                    {% if transaction.receiver.userprofile.profile_picture %}
+                    <img src="{{ transaction.receiver.userprofile.profile_picture.url }}" alt="{{ transaction.receiver.username }}" class="user-image">
+                    {% else %}
+                    <div class="default-icon">{{ transaction.receiver.username|first|upper }}</div>
+                    {% endif %}
+                </div>
+                <div class="details">
+                    <div class="name">{{ transaction.receiver.username }}</div>
+                    <div class="description">{{ transaction.description }}</div>
+                    <div class="time">{{ transaction.timestamp|date:"F j, Y, g:i a" }}</div>
+                </div>
+                <div class="amount negative">
+                    -₹{{ transaction.amount }}
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-transactions">No sent transactions found.</div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if sent_transactions_page.has_previous %}
+                    <a href="?sent_page=1">&laquo; first</a>
+                    <a href="?sent_page={{ sent_transactions_page.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ sent_transactions_page.number }} of {{ sent_transactions_page.paginator.num_pages }}.
+                </span>
+
+                {% if sent_transactions_page.has_next %}
+                    <a href="?sent_page={{ sent_transactions_page.next_page_number }}">next</a>
+                    <a href="?sent_page={{ sent_transactions_page.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        <h2>Received Transactions</h2>
+        <div class="transactions">
+            {% for transaction in received_transactions_page %}
+            <div class="transaction">
+                <div class="icon">
+                    {% if transaction.sender.userprofile.profile_picture %}
+                    <img src="{{ transaction.sender.userprofile.profile_picture.url }}" alt="{{ transaction.sender.username }}" class="user-image">
+                    {% else %}
+                    <div class="default-icon">{{ transaction.sender.username|first|upper }}</div>
+                    {% endif %}
+                </div>
+                <div class="details">
+                    <div class="name">{{ transaction.sender.username }}</div>
+                    <div class="description">{{ transaction.description }}</div>
+                    <div class="time">{{ transaction.timestamp|date:"F j, Y, g:i a" }}</div>
+                </div>
+                <div class="amount positive">
+                    +₹{{ transaction.amount }}
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-transactions">No received transactions found.</div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if received_transactions_page.has_previous %}
+                    <a href="?received_page=1">&laquo; first</a>
+                    <a href="?received_page={{ received_transactions_page.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ received_transactions_page.number }} of {{ received_transactions_page.paginator.num_pages }}.
+                </span>
+
+                {% if received_transactions_page.has_next %}
+                    <a href="?received_page={{ received_transactions_page.next_page_number }}">next</a>
+                    <a href="?received_page={{ received_transactions_page.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</body>
+</html>

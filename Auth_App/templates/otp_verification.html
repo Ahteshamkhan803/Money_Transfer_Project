@@ -1,0 +1,28 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="{% static 'otp_verification.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>OTP Verification</h2>
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+        <form method="POST" action="{% url 'verify_otp' email=email %}">
+            {% csrf_token %}
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ email }}" readonly><br>
+            <label for="otp">OTP:</label>
+            <input type="text" id="otp" name="otp" required><br>
+            <button type="submit">Verify</button>
+        </form>
+        <a href="{% url 'resend_otp' email=email %}">Resend OTP</a>
+    </div>
+</body>
+</html>

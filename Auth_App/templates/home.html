@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <p>Welcome, {{ user.username }}. Your balance is {{ user.account.balance }}</p>
+            <a href="{% url 'search_users' %}">
+                <button class="send-money-btn">
+                    <span>&#x2191;</span> <!-- Upward arrow inside round button -->
+                    <br>
+                    <span>Send</span>
+                </button>
+                
+            </a>
+            <a href="{% url 'logout' %}">
+                <button>logout</button>
+            </a> 
+
+            <a href="{% url 'transactions' %}">
+                <button>transactions</button>
+            </a>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="img-container">
+                {% if user.userprofile.profile_picture %}
+                    <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture">
+                {% else %}
+                    <img src="{% static 'default-profile.png' %}" alt="Default Profile Picture">
+                {% endif %}
+                <label class="plus-icon" for="profile_picture">+</label>
+                <input type="file" id="profile_picture" name="profile_picture" accept="image/*" onchange="this.form.submit()">
+            </div>
+        </form>
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
