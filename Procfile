@@ -1,1 +1,1 @@
-web: gunicorn Money_Transfer_Project.wsgi --log-file -
+web: gunicorn MoneyTransfer_Project.wsgi --log-file -

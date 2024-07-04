@@ -90,15 +90,6 @@ WSGI_APPLICATION = 'MoneyTransfer_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-<<<<<<< HEAD
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-=======
->>>>>>> 8e5e12494a98053da47a249d445b35f09a1547e4
 
 
 
