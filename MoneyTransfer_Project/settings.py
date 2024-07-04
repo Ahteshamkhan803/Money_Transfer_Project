@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'MoneyTransfer_Project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-ALLOWED_HOSTS = ['your-app-name.onrender.com']
+
 
 DATABASES = {
     'default': {
